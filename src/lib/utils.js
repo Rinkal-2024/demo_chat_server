@@ -9,6 +9,6 @@ export const generateToken = (userId , res) => {
         maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true , 
         sameSite : 'Strict', // CSRF attack prevention by allowing the cookie to be sent only to the same site.
-        secure : process.env.NODE_ENV === 'production'
+        secure : process.env.NODE_ENV === 'production',
     })
 }

@@ -8,19 +8,18 @@ export const protectRoute = async (req , res , next) =>{
             return res.status(401).json({message: " Unauthenticated "});
         }
 
-        const decoded = jwt.verify('token' , process.env.JWT_SECRET);
-        console.log(decoded , "decoded in middleware")
+        const decoded = jwt.verify(token , process.env.JWT_SECRET);
         if(!decoded){
             return res.status(401).json({message: " Unauthenticated "});
         }
 
-        const user = await User.findById(decoded.userId).select(--password);
-        console.log(user , "user in middleware")
+        const user = await User.findById(decoded.userId).select('--password');
         if(!user){
             return res.status(404).json({message: "User not found"})
         }
         req.user = user;
         next();
+
     }catch(error){
         console.log("Error in Protect Route Middleware", error.message);
         res.status(500).json({message: "Internal Server Error"});
